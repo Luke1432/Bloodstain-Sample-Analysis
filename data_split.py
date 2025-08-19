@@ -23,7 +23,7 @@ val_dataset = tf.keras.preprocessing.image_dataset_from_directory(
     data_dir,
     image_size=IMG_SIZE,
     batch_size=BATCH_SIZE,
-    validation_split=0.2,  # Ensure the same split
+    validation_split=0.4,  # Ensure the same split
     subset="validation",  # Use this for validation data
     seed=123,  # Same seed for reproducibility
 )

@@ -16,6 +16,9 @@ EPOCHS = 60  # Number of epochs for training
 # Apply random transformations to increase dataset diversity
 data_augmentation = keras.Sequential([
     layers.RandomFlip("horizontal"),  # Only flip images horizontally
+    layers.RandomRotation(0.2),  # Rotate images randomly within 20 degrees
+    layers.RandomZoom(0.2),  # Zoom images randomly within 10%
+    layers.RandomBrightness(0.2),  # Adjust contrast randomly within 20%
 ])
 
 # --- Load the dataset ---
@@ -29,7 +32,7 @@ full_ds = keras.preprocessing.image_dataset_from_directory(
 
 # --- Get dataset size and split into training and testing ---
 ds_size = tf.data.experimental.cardinality(full_ds).numpy()  # Get total number of samples
-train_size = int(0.8 * ds_size)  # Use 80% for training
+train_size = int(0.6 * ds_size)  # Use 80% for training
 train_ds = full_ds.take(train_size)  # Take the first 80% for training
 test_ds = full_ds.skip(train_size)  # Skip the first 80% for testing
 
@@ -38,14 +41,14 @@ keras.regularizers.l2(0.01),  # Increase L2 regularization
 
 # Apply data augmentation to the training dataset
 train_ds = train_ds.map(lambda x, y: (data_augmentation(x), y))  # Augment training data
+# Normalize test dataset
+test_ds = test_ds.map(lambda x, y: (layers.Rescaling(1./255)(x), y))
 
 model = keras.Sequential([
     layers.Rescaling(1./255, input_shape=IMG_SIZE + (3,)),  # Normalize pixel values to [0, 1]
     layers.Conv2D(32, 3, activation="relu", kernel_regularizer=keras.regularizers.l2(0.01)),  # First convolutional layer with stronger L2 regularization
     layers.BatchNormalization(),  # Batch normalization to stabilize learning
     layers.MaxPooling2D(),  # First max pooling layer
-    layers.Dropout(0.3),  # Increased dropout rate
-    layers.Conv2D(64, 3, activation="relu", kernel_regularizer=keras.regularizers.l2(0.01)),  # Second convolutional layer with stronger L2 regularization
     layers.BatchNormalization(),  # Batch normalization to stabilize learning
     layers.MaxPooling2D(),  # Second max pooling layer
     layers.Dropout(0.3),  # Increased dropout rate
@@ -62,7 +65,7 @@ model = keras.Sequential([
 # --- Compile the model ---
 # Use Adam optimizer with a learning rate scheduler
 lr_schedule = keras.optimizers.schedules.ExponentialDecay(
-    initial_learning_rate=0.00005,
+    initial_learning_rate=0.0001,
     decay_steps=10000,  # Decay less frequently
     decay_rate=0.9  # Reduce learning rate less aggressively
 )
@@ -71,13 +74,13 @@ model.compile(optimizer=optimizer, loss="binary_crossentropy", metrics=["accurac
 
 # --- Train the model ---
 # Use class weights to handle class imbalance
-class_weights = {0: 1.0, 1: 4.0}  # Adjust weights based on class distribution
+class_weights = {0: 1.0, 1: 2.0}  # Adjust weights based on class distribution
 early_stopping = keras.callbacks.EarlyStopping(
     monitor='val_accuracy',  # Monitor validation accuracy
-    patience=10,  # Stop if no improvement for 5 epochs
+    patience=15, 
     restore_best_weights=True  # Restore the best model weights
 )
-history = model.fit(train_ds, validation_data=test_ds, epochs=EPOCHS, callbacks=[early_stopping])
+history = model.fit(train_ds, validation_data=test_ds, epochs=EPOCHS)
 
 # --- Plot Accuracy ---
 plt.figure(figsize=(8, 5))
@@ -88,7 +91,6 @@ plt.ylabel('Accuracy')  # Label for y-axis
 plt.title('Model Accuracy')  # Title of the plot
 plt.legend()  # Add legend
 plt.grid(True)  # Add grid for better readability
-plt.show()
 
 # --- Plot Loss ---
 plt.figure(figsize=(8, 5))

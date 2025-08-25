@@ -16,7 +16,7 @@ img_size = (120, 120)
 batch_size = 8  # smaller batch for tiny dataset
 
 # -------------------------------
-# Aggressive Data Augmentation
+# Data Augmentation for training
 # -------------------------------
 train_datagen = ImageDataGenerator(
     rotation_range=15,
@@ -24,8 +24,8 @@ train_datagen = ImageDataGenerator(
     height_shift_range=0.1,
     zoom_range=0.1,
     brightness_range=[0.9, 1.1],
-    validation_split=0.2,
-    rescale=1./255
+    rescale=1./255,
+    validation_split=0.2
 )
 
 train_generator = train_datagen.flow_from_directory(
@@ -37,7 +37,15 @@ train_generator = train_datagen.flow_from_directory(
     shuffle=True
 )
 
-val_generator = train_datagen.flow_from_directory(
+# -------------------------------
+# Validation generator (no augmentation)
+# -------------------------------
+val_datagen = ImageDataGenerator(
+    rescale=1./255,
+    validation_split=0.2
+)
+
+val_generator = val_datagen.flow_from_directory(
     data_dir,
     target_size=img_size,
     batch_size=batch_size,
@@ -45,6 +53,7 @@ val_generator = train_datagen.flow_from_directory(
     subset='validation',
     shuffle=False
 )
+
 
 # -------------------------------
 # Compute class weights
@@ -91,7 +100,7 @@ reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=4, min_lr
 # -------------------------------
 history = model.fit(
     train_generator,
-    epochs=100,
+    epochs=300,
     validation_data=val_generator,
     class_weight=class_weights_dict,
     callbacks=[early_stop, reduce_lr]

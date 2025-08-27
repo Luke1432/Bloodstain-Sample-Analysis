@@ -100,10 +100,10 @@ reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=4, min_lr
 # -------------------------------
 history = model.fit(
     train_generator,
-    epochs=300,
+    epochs=100,
     validation_data=val_generator,
     class_weight=class_weights_dict,
-    callbacks=[early_stop, reduce_lr]
+    callbacks=[reduce_lr]
 )
 
 # -------------------------------

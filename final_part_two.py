@@ -9,6 +9,7 @@ from sklearn.utils.class_weight import compute_class_weight
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.regularizers import l2
 
 # -------------------------------
 # Paths and parameters
@@ -101,18 +102,18 @@ print("Class weights:", class_weights_dict)
 # Step 5: Build the CNN
 # -------------------------------
 model = Sequential([
-    Conv2D(16, (3,3), activation='relu', input_shape=(img_size[0], img_size[1], 3)),
+    Conv2D(16, (3,3), activation='relu', input_shape=(img_size[0], img_size[1], 3), kernel_regularizer=l2(0.001)),
     BatchNormalization(),
     MaxPool2D((2,2)),
 
-    Conv2D(32, (3,3), activation='relu'),
+    Conv2D(32, (3,3), activation='relu', kernel_regularizer=l2(0.001)),
     BatchNormalization(),
     MaxPool2D((2,2)),
 
     Flatten(),
-    Dense(64, activation='relu'),
+    Dense(64, activation='relu', kernel_regularizer=l2(0.001)),
     Dropout(0.35),
-    Dense(1, activation='sigmoid')
+    Dense(1, activation='sigmoid', kernel_regularizer=l2(0.001))
 ])
 
 model.compile(optimizer=Adam(learning_rate=1e-4),
@@ -124,7 +125,7 @@ model.summary()
 # -------------------------------
 # Step 6: Callbacks
 # -------------------------------
-early_stop = EarlyStopping(monitor='val_loss', patience=100, restore_best_weights=True)
+early_stop = EarlyStopping(monitor='val_loss', patience=8, restore_best_weights=True)
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=4, min_lr=1e-6)
 
 # -------------------------------

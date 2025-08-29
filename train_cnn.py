@@ -1,3 +1,25 @@
+"""
+File: train_cnn.py
+Purpose: Train a convolutional neural network (CNN) from scratch for bloodstain pattern classification
+         using a small image dataset. Includes data augmentation, class weighting, L2 regularization,
+         and early stopping to improve generalization on a limited dataset.
+
+Dependencies:
+    - Python 3.x
+    - TensorFlow / Keras
+    - NumPy
+    - Pandas
+    - Matplotlib
+    - scikit-learn
+
+Outputs:
+    - Trained CNN model
+    - Training and validation accuracy/loss plots
+    - Test accuracy evaluation
+
+See README.md for full project overview and dataset details.
+"""
+
 import os
 import numpy as np
 import pandas as pd
@@ -106,14 +128,14 @@ model = Sequential([
     BatchNormalization(),
     MaxPool2D((2,2)),
 
-    Conv2D(32, (3,3), activation='relu', kernel_regularizer=l2(0.001)),
+    Conv2D(32, (3,3), activation='relu', kernel_regularizer=l2(1e-5)),
     BatchNormalization(),
     MaxPool2D((2,2)),
 
     Flatten(),
-    Dense(64, activation='relu', kernel_regularizer=l2(0.001)),
-    Dropout(0.35),
-    Dense(1, activation='sigmoid', kernel_regularizer=l2(0.001))
+    Dense(64, activation='relu', kernel_regularizer=l2(1e-5)),
+    Dropout(0.1),
+    Dense(1, activation='sigmoid', kernel_regularizer=l2(1e-5))
 ])
 
 model.compile(optimizer=Adam(learning_rate=1e-4),
@@ -125,7 +147,7 @@ model.summary()
 # -------------------------------
 # Step 6: Callbacks
 # -------------------------------
-early_stop = EarlyStopping(monitor='val_loss', patience=8, restore_best_weights=True)
+early_stop = EarlyStopping(monitor='val_loss', patience=12, restore_best_weights=True)
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=4, min_lr=1e-6)
 
 # -------------------------------

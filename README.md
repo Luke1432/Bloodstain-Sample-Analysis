@@ -93,5 +93,5 @@ To replicate the analysis:
 
 4. Check the output plots and test accuracy printed in the console. 
 
-![](SampleOutput1.png)
-![](SampleOutput2.png)
+![Output of execution of train_cnn.py](SampleOutput1.png)
+![Information about CNN model](SampleOutput2.png)

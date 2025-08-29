@@ -34,7 +34,7 @@ Bloodstain-Sample-Analysis/
 │
 ├── train_cnn.py # Script for training the model and evaluating performance
 │
-├── visualize_bloodstain_images.ipynb # Jupyter notebook for visualization
+├── visualize_bloodstain_images.ipynb # Jupyter notebook for visualization```
 
 ## Data Preparation
 

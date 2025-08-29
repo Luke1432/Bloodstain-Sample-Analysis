@@ -93,5 +93,6 @@ To replicate the analysis:
 
 4. Check the output plots and test accuracy printed in the console. 
 
+![Graph of training and validation progression every epoch](sampleOutput3.png)
 ![Output of execution of train_cnn.py](sampleOutput1.png)
 ![Information about CNN model](sampleOutput2.png)

@@ -17,6 +17,7 @@ This repository presents a comprehensive approach to bloodstain pattern analysis
 Bloodstain pattern analysis is a critical component in forensic investigations, aiding in reconstructing crime scenes. This project utilizes deep learning to automate the classification of bloodstain images, distinguishing between patterns resulting from blunt force trauma and gunshot wounds.
 
 ## Project Structure
+```bash
 Bloodstain-Sample-Analysis/
 │
 ├── SIZE_120_rescaled_max_area_1024/ # Image dataset directory

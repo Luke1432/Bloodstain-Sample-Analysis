@@ -10,7 +10,7 @@ import numpy as np
 DATA_DIR = pathlib.Path("SIZE_120_rescaled_max_area_1024")  # Path to the dataset
 IMG_SIZE = (120, 120)  # Image dimensions
 BATCH_SIZE = 32  # Batch size for training
-EPOCHS = 60  # Number of epochs for training
+EPOCHS = 15  # Number of epochs for training
 
 # --- Data Augmentation ---
 # Apply random transformations to increase dataset diversity

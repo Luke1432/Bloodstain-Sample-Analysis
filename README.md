@@ -93,5 +93,5 @@ To replicate the analysis:
 
 4. Check the output plots and test accuracy printed in the console. 
 
-![]("Sample output 2")
-![]("Sample output")
+![](SampleOutput1.png)
+![](SampleOutput2.png)

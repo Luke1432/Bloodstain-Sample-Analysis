@@ -1,6 +1,6 @@
-### ﻿Bloodstain Sample Analysis – Transition & Handoff Document
+# ﻿Bloodstain Sample Analysis – Transition & Handoff Document
 ## Project Overview
-# Project Purpose:
+### Project Purpose:
  The Bloodstain Sample Analysis project automates classification of bloodstain images into blunt-force impact and gunshot categories using a Convolutional Neural Network (CNN). This system reduces bias present in traditional forensic analysis and provides reproducible, scalable results for crime scene reconstruction.
 Project Goals:
 * Train a CNN to classify bloodstain images with high accuracy.
@@ -27,24 +27,24 @@ Project Importance:
 
 
 ## Deliverables and File Descriptions
-# Dataset
+### Dataset
       * Location: SIZE_120_rescaled_max_area_1024/
 
       * Structure: Two subfolders (blunt, gunshot) containing .png and .jpg images.
 
-# Usage:
+#### Usage:
          * Automatically split into training, validation, and test sets by train_cnn.py.
 
          * Images should remain in original folder structure; new images should be added to appropriate subfolders.
 
-# Next Steps:
+#### Next Steps:
             * Expand the dataset to improve model accuracy.
 
             * Ensure image size consistency.
 
 
 
-## Training Script (train_cnn.py)
+### Training Script (train_cnn.py)
 Purpose: Handles preprocessing, model creation, training, validation, and evaluation.
 Key Features:
                * Data augmentation: rotation, zoom, shift, brightness adjustment
@@ -57,7 +57,7 @@ Key Features:
 
 
 
-# Usage Instructions:
+## Usage Instructions:
 python train_cnn.py
 
 
@@ -73,7 +73,7 @@ Operational Notes:
 
                      * Monitor validation metrics to detect overfitting.
 
-## Trained CNN Model
+### Trained CNN Model
                         * File: cnn_bloodstain_gun_blunt_best_v1.h5
 
                         * Purpose: Ready-to-use for inference on new bloodstain images.
@@ -85,7 +85,7 @@ model = load_model('cnn_bloodstain_gun_blunt_best_v1.h5')
 
 
                            * Next Steps: Integrate into operational pipelines or retrain after dataset expansion
-## Visualizations
+### Visualizations
                            * File: Figure_1.png
 
                            * Shows training/validation accuracy and loss over epochs.
@@ -127,7 +127,7 @@ Next Steps:
 
 
 ## Workflow & Operational Guidelines
-# Training & Evaluation Flowchart
+### Training & Evaluation Flowchart
 Dataset (SIZE_120_rescaled_max_area_1024/)
          |
          v
@@ -151,7 +151,7 @@ Plot Results (accuracy/loss curves)
 
 
 
-# Operational Guidelines
+### Operational Guidelines
                                        * Class Weighting: Ensures balanced learning on imbalanced datasets.
 
                                        * L2 Regularization & Dropout: Reduces overfitting on small datasets.

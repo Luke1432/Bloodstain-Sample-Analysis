@@ -1,6 +1,6 @@
-﻿Bloodstain Sample Analysis – Transition & Handoff Document
-1. Project Overview
-Project Purpose:
+### ﻿Bloodstain Sample Analysis – Transition & Handoff Document
+## Project Overview
+# Project Purpose:
  The Bloodstain Sample Analysis project automates classification of bloodstain images into blunt-force impact and gunshot categories using a Convolutional Neural Network (CNN). This system reduces bias present in traditional forensic analysis and provides reproducible, scalable results for crime scene reconstruction.
 Project Goals:
 * Train a CNN to classify bloodstain images with high accuracy.
@@ -26,25 +26,25 @@ Project Importance:
  Accurate classification of bloodstain patterns aids forensic investigators in determining the nature of injuries and weapons used, providing critical evidence for legal proceedings.
 
 
-2. Deliverables and File Descriptions
-2.1 Dataset
+## Deliverables and File Descriptions
+# Dataset
       * Location: SIZE_120_rescaled_max_area_1024/
 
       * Structure: Two subfolders (blunt, gunshot) containing .png and .jpg images.
 
-Usage:
+# Usage:
          * Automatically split into training, validation, and test sets by train_cnn.py.
 
          * Images should remain in original folder structure; new images should be added to appropriate subfolders.
 
-Next Steps:
+# Next Steps:
             * Expand the dataset to improve model accuracy.
 
             * Ensure image size consistency.
 
 
 
-2.2 Training Script (train_cnn.py)
+## Training Script (train_cnn.py)
 Purpose: Handles preprocessing, model creation, training, validation, and evaluation.
 Key Features:
                * Data augmentation: rotation, zoom, shift, brightness adjustment
@@ -57,7 +57,7 @@ Key Features:
 
 
 
-Usage Instructions:
+# Usage Instructions:
 python train_cnn.py
 
 
@@ -73,7 +73,7 @@ Operational Notes:
 
                      * Monitor validation metrics to detect overfitting.
 
-2.3 Trained CNN Model
+## Trained CNN Model
                         * File: cnn_bloodstain_gun_blunt_best_v1.h5
 
                         * Purpose: Ready-to-use for inference on new bloodstain images.
@@ -85,7 +85,7 @@ model = load_model('cnn_bloodstain_gun_blunt_best_v1.h5')
 
 
                            * Next Steps: Integrate into operational pipelines or retrain after dataset expansion
-2.4 Visualizations
+## Visualizations
                            * File: Figure_1.png
 
                            * Shows training/validation accuracy and loss over epochs.
@@ -96,12 +96,12 @@ model = load_model('cnn_bloodstain_gun_blunt_best_v1.h5')
 
 
 
-2.5 Documentation
+## Documentation
                               * README.md: High-level project overview and setup instructions.
 
                               * HANDOFF.md: Explains file usage, operational guidance, and next steps.
 
-3. Environment & Dependencies
+## Environment & Dependencies
 Python Version: 3.x
 Libraries Required:
                                  * TensorFlow / Keras
@@ -126,8 +126,8 @@ Next Steps:
 
 
 
-4. Workflow & Operational Guidelines
-4.1 Training & Evaluation Flowchart
+## Workflow & Operational Guidelines
+# Training & Evaluation Flowchart
 Dataset (SIZE_120_rescaled_max_area_1024/)
          |
          v
@@ -151,7 +151,7 @@ Plot Results (accuracy/loss curves)
 
 
 
-4.2 Operational Guidelines
+# Operational Guidelines
                                        * Class Weighting: Ensures balanced learning on imbalanced datasets.
 
                                        * L2 Regularization & Dropout: Reduces overfitting on small datasets.
@@ -167,7 +167,7 @@ Knowledge Transfer Notes:
 
 
 
-5. Suggested Next Steps
+## Suggested Next Steps
                                              1. Operational Deployment: Integrate the trained model into forensic workflows.
 
                                              2. Dataset Expansion: Add new images to improve accuracy and generalization.
@@ -180,7 +180,7 @@ Knowledge Transfer Notes:
 
 
 
-6. Access & Login Information
+## Access & Login Information
                                                 * GitHub Repository: https://github.com/Luke1432/Bloodstain-Sample-Analysis
 
                                                 * Dataset: Included in repository; no login required.
